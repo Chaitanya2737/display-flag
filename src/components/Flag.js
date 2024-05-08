@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { flag } from '../api/Api'
-
-
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -52,7 +50,7 @@ const Flag = () => {
                     data.map((flag, index) => (
                         <Grid item xs={12} md={3} lg={4} xl={2} key={index}>
                             <Item >
-                                <img src={ flag.coatOfArms.png || img } className='photo' />
+                                <img src={ flag.coatOfArms.png || img } className='photo' alt='original image is not found' />
                                 <Typography variant="h6" color="initial" >
                                 {flag.name.common }
                                 </Typography>
