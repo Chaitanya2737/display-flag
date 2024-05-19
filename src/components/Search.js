@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Search = ({ data, onSearch }) => {
+const Search = ({ onSearch }) => {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -25,7 +25,7 @@ const Search = ({ data, onSearch }) => {
 
   return (
     <div>
-      <input onChange={handleChange} type="text" value={search} />
+      <input onChange={handleChange} type="text" value={search} placeholder="Search countries..." />
     </div>
   );
 };

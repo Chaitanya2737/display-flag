@@ -18,9 +18,13 @@ const Flag = () => {
   };
 
   const getflags = async () => {
-    const flagdata = await flag();
-    setData(flagdata);
-    setFilteredData(flagdata); // Initialize filteredData with all flags
+    try {
+      const flagdata = await flag();
+      setData(flagdata);
+      setFilteredData(flagdata); // Initialize filteredData with all flags
+    } catch (error) {
+      console.error('Failed to fetch flags:', error);
+    }
   };
 
   useEffect(() => {
@@ -55,7 +59,7 @@ const Flag = () => {
           <Grid item xs={12} md={3} lg={4} xl={2} key={index}>
             <Item>
               <img
-                src={flag.coatOfArms.png || img}
+                src={flag.coatOfArms?.png || img}
                 className='photo'
                 alt='original image is not found'
                 onError={brokeImg}
