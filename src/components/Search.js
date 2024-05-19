@@ -10,13 +10,21 @@ const Search = ({ onSearch }) => {
 
   // Create a debounced version of the search term
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500); // Reduced debounce time for better UX
 
-    return () => {
-      clearTimeout(handler);
-    };
+    try {
+
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search);
+          }, 500); // Reduced debounce time for better UX
+      
+          return () => {
+            clearTimeout(handler);
+          };
+        
+    } catch (error) {
+        console.log(error)
+    }
+
   }, [search]);
 
   useEffect(() => {

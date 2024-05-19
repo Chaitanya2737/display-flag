@@ -28,7 +28,11 @@ const Flag = () => {
   };
 
   useEffect(() => {
-    getflags();
+    try {
+        getflags();
+    } catch (error) {
+        console.log(error)
+    }
   }, []);
 
   const handleSearch = (searchTerm) => {
