@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { flag } from '../api/Api';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import './style.css';
 import Typography from '@mui/material/Typography';
 import Search from './Search';
+import './style.css';
+
+const DEFAULT_IMG = "https://mainfacts.com/media/images/coats_of_arms/in.png";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 const Flag = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const img = "https://mainfacts.com/media/images/coats_of_arms/in.png";
 
   const brokeImg = (event) => {
-    event.currentTarget.src = img;
+    event.currentTarget.src = DEFAULT_IMG;
   };
 
-  const getflags = async () => {
+  const getflags = useCallback(async () => {
     try {
       const flagdata = await flag();
       setData(flagdata);
@@ -25,15 +34,11 @@ const Flag = () => {
     } catch (error) {
       console.error('Failed to fetch flags:', error);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    try {
-        getflags();
-    } catch (error) {
-        console.log(error)
-    }
-  }, []);
+    getflags();
+  }, [getflags]);
 
   const handleSearch = (searchTerm) => {
     if (searchTerm === '') {
@@ -46,14 +51,6 @@ const Flag = () => {
     }
   };
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
-
   return (
     <Box sx={{ width: '100%' }}>
       <Search data={data} onSearch={handleSearch} />
@@ -63,7 +60,7 @@ const Flag = () => {
           <Grid item xs={12} md={3} lg={4} xl={2} key={index}>
             <Item>
               <img
-                src={flag.coatOfArms?.png || img}
+                src={flag.coatOfArms?.png || DEFAULT_IMG}
                 className='photo'
                 alt='original image is not found'
                 onError={brokeImg}
